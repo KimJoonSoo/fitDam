@@ -39,5 +39,11 @@ public interface BoardDAO
 	public void replyInsert(ReplyVO vo) throws Exception;
 	
 	// 댓글 목록 기능
-	public List<BoardVO> replyList() throws Exception;
+	public List<ReplyVO> replyList(int b_no) throws Exception;
+	
+	// 댓글 검색 기능
+	public List<ReplyVO> replySearch(SearchCriteria cri)throws Exception;
+	
+	// 댓글 검색 카운트 기능
+	public int replySearchCount(SearchCriteria cri) throws Exception;
 }

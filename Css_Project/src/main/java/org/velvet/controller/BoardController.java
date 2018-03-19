@@ -1,11 +1,14 @@
 package org.velvet.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.velvet.controller.BoardController;
 import org.velvet.dao.BoardDAO;
 import org.velvet.domain.PageMaker;
+import org.velvet.domain.ProductVO;
 import org.velvet.domain.ReplyVO;
 import org.velvet.domain.SearchCriteria;
 import org.velvet.domain.UserVO;
@@ -90,11 +93,11 @@ public class BoardController
 	    
 	    model.addAttribute("userVO", uv);
 	    
+	    model.addAttribute("replyList", dao.replyList(b_no));
 	    
 	    
 	    
-	    
-	    // 여기부터 글조회 중 댓글 기능
+
 	    PageMaker pageMaker = new PageMaker();
 	    pageMaker.setCri(cri);
 	    model.addAttribute("pageMaker", pageMaker);
@@ -175,15 +178,5 @@ public class BoardController
 	    return "redirect:/board/readPage";
 	}
 	
-	// 댓글 목록기능
-	@RequestMapping(value = "/replyList", method = RequestMethod.GET)
-	public void replyList(@ModelAttribute("cri") SearchCriteria cri, Model model, HttpSession session) throws Exception 
-	{
-		logger.info(cri.toString());
 
-	    PageMaker pageMaker = new PageMaker();
-	    pageMaker.setCri(cri);
-
-	    model.addAttribute("pageMaker", pageMaker);
-	}
 }

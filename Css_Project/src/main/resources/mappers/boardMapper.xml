@@ -105,9 +105,11 @@
 	
 	
 	<!-- 댓글 목록 기능 -->
-	<select id="replyList" resultType="ReplyVO">
-		select re_no, b_no, re_title, re_content, u_id, re_regdate
+	<select id="replyList" resultType="org.velvet.domain.ReplyVO">
+		select re_no, b_no, re_title, re_content, u_id, to_char(re_regdate, 'yyyy/mm/dd hh24:mi:ss') as re_regdate
 		from tbl_reply
 		where b_no = #{b_no}
 	</select>
+	
+
 </mapper>

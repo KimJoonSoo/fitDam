@@ -78,32 +78,38 @@
 <div>
 <table class="boardTable">
 	<tr>
-		<th colspan="4" style="height: 80px; font-size: 40px;">[${boardVO.b_no}]'s &nbsp;&nbsp;&nbsp; R e p l y &nbsp;&nbsp;&nbsp; L i s t</th>
+		<th colspan="5" style="height: 80px; font-size: 40px;">[${boardVO.b_no}]'s &nbsp;&nbsp;&nbsp; R e p l y &nbsp;&nbsp;&nbsp; L i s t</th>
 	</tr>
 	<tr>
-		<th class="boardTable" style="width: 70px">Re. N o</th>
-		<th class="boardTable" style="width: 300px">Re. T i t l e</th>
-		<th class="boardTable" style="width: 230px">Re. W r i t e r</th>
-		<th class="boardTable" style="width: 200px">Re. R e g d a t e</th>
+		<th class="boardTable" style="width: 150px">Re. N o</th>
+		<th class="boardTable" style="width: 350px" colspan="2">Re. T i t l e</th>
+		<th class="boardTable" style="width: 350px">Re. W r i t e r</th>
+		<th class="boardTable" style="width: 350px">Re. R e g d a t e</th>
 	</tr>
 	
 	<c:choose>
-	<c:when test="${map.count == 0}">
+	
+	<c:when test="${replyList.size() == 0}">
 		<tr>
-			<td align="center" colspan="4" style="height: 100px; text-align: center; font-size: 30px;">N o &nbsp;&nbsp;&nbsp; R e p l y</td>
+			<td align="center" colspan="5" style="height: 100px; text-align: center; font-size: 30px;">N o &nbsp;&nbsp;&nbsp; R e p l y</td>
 		</tr>
 	</c:when>
 
 	<c:otherwise>
 		<c:forEach items="${replyList}" var="replyVO">
 			<tr>
-				<td style="background-color:#002266; color: white; width: 70px; border-radius: 8px; height: 45px;">${replyVO.re_no}</td>
-				<td class="boardTable">${replyVO.re_title}</td>
-				<td class="boardTable">${replyVO.u_id}</td>
-				<td class="boardTable"><fmt:formatDate value="${replyVO.re_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td rowspan="2" style="background-color:#002266; color: white; width: 150px; border-radius: 8px; height: 45px;">${replyVO.re_no}</td>
+				<td colspan="2" class="boardTable" style="width: 350px">${replyVO.re_title}</td>
+				<td class="boardTable" style="width: 350px">${replyVO.u_id}</td>
+				<td class="boardTable" style="width: 350px">${replyVO.re_regdate}</td>
+			</tr>
+			<tr>
+				<th class="boardTable" style="width: 300px">Re. Contents</th>
+				<td colspan="3"><textarea class="b_content" name="b_content" rows="3" readonly="readonly" style="width: 800px; font-size: 20px; border-radius: 5px; padding : 15px;">${replyVO.re_content}</textarea></td>
 			</tr>
 		</c:forEach>
 	</c:otherwise>
+	
 	</c:choose>
 </table>
 

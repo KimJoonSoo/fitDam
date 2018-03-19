@@ -9,7 +9,7 @@ public class ReplyVO
     private String 	re_title;        //댓글제목
     private String 	re_content;      //댓글내용
     private String 	u_id;            //작성자
-    private Date 	re_regdate;		 //댓글등록날짜
+    private String 	re_regdate;		 //댓글등록날짜
 	
     
     public int getRe_no() {
@@ -42,10 +42,10 @@ public class ReplyVO
 	public void setU_id(String u_id) {
 		this.u_id = u_id;
 	}
-	public Date getRe_regdate() {
+	public String getRe_regdate() {
 		return re_regdate;
 	}
-	public void setRe_regdate(Date re_regdate) {
+	public void setRe_regdate(String re_regdate) {
 		this.re_regdate = re_regdate;
 	}
 	
@@ -54,6 +54,8 @@ public class ReplyVO
 	public String toString() 
 	{
 		return "ReplyVO [re_no=" + re_no + ", b_no=" + b_no + ", re_title=" + re_title + ", re_content=" + re_content
-				+ ", u_id=" + u_id + ", re_regdate=" + re_regdate + "]";
-	}    
+				+ ", u_id=" + u_id + ", re_regdate=" + re_regdate + ", toString()=" + super.toString() + "]";
+	}
+	
+    
 }

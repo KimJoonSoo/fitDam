@@ -54,6 +54,7 @@ public class BoardVO
 	public String toString() 
 	{
 		return "BoardVO [b_no=" + b_no + ", b_title=" + b_title + ", b_content=" + b_content + ", u_id=" + u_id
-				+ ", b_regdate=" + b_regdate + ", b_viewcnt=" + b_viewcnt + "]";
+				+ ", b_regdate=" + b_regdate + ", b_viewcnt=" + b_viewcnt + ", toString()=" + super.toString() + "]";
 	}
+
 }

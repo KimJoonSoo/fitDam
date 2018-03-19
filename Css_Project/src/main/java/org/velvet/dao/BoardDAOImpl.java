@@ -84,8 +84,22 @@ public class BoardDAOImpl implements BoardDAO
 	
 	// 댓글 목록 기능
 	@Override
-	public List<BoardVO> replyList() throws Exception 
+	public List<ReplyVO> replyList(int b_no) throws Exception 
 	{
-		return session.selectList(namespace + ".replyList");
+		return session.selectList(namespace + ".replyList", b_no);
+	}
+	
+	// 댓글 검색 기능
+	@Override
+	public List<ReplyVO> replySearch(SearchCriteria cri) throws Exception 
+	{
+	    return session.selectList(namespace + ".replySearch", cri);
+	}
+	
+	// 댓글 검색 카운트 기능
+	@Override
+	public int replySearchCount(SearchCriteria cri) throws Exception 
+	{
+		 return session.selectOne(namespace + ".replySearchCount", cri);
 	}
 }
