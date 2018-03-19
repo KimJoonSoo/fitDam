@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.AdminMapper">
+	<!-- 관리자 가입 -->
+	<insert id="adminRegister" parameterType="org.velvet.domain.AdminVO">
+		insert into tbl_admin (a_name, a_id, a_password, a_phonenum, a_email)
+		values (#{a_name}, #{a_id}, #{a_password}, #{a_phonenum}, #{a_email})
+	</insert>
+
+	<!-- 관리자 로그인 -->
+	<select id="adminLogin" parameterType="org.velvet.domain.AdminVO" resultType="AdminVO">
+		select a_name, a_id, a_phonenum, a_email, a_level, a_regdate, a_recentlogout from tbl_admin
+		where a_id=#{a_id} and a_password=#{a_password}
+	</select>
+		
+	<!-- 관리자 로그인 체크 -->
+	<select id="adminloginCheck" resultType="AdminVO">
+		select a_name, a_id, a_password, a_phonenum, a_email, a_level, a_regdate, a_recentlogout from tbl_admin
+		WHERE a_id = #{a_id} and a_password = #{a_password}
+	</select>
+
+	<!-- 관리자 아이디 중복 확인 -->
+	<select id="adminidCheck" resultType="String">
+		SELECT a_id FROM tbl_admin
+		WHERE a_id = #{a_id}
+	</select>
+	
+	<!-- 관리자 마이페이지 -->
+	<select id="adminMypage" parameterType="String" resultType="org.velvet.domain.AdminVO">
+		select a_name, a_id, a_password, a_phonenum, a_email, a_level, a_regdate, to_char(a_recentlogout, 'yyyy/mm/dd hh24:mi:ss') as a_recentlogout
+		from tbl_admin where a_id = #{a_id}
+	</select>
+
+	<!-- 관리자 로그아웃(로그아웃시간 생성) -->
+	<update id="adminrecentLogout">
+		update tbl_admin set a_recentlogout = sysdate where a_id=#{a_id}
+	</update>
+
+	<!-- 관리자 목록 기능 -->
+	<select id="adminList" parameterType="String" resultType="org.velvet.domain.AdminVO">
+		select a_name, a_id, a_phonenum, a_email, a_level 
+		from tbl_admin 
+		order by a_level, a_id desc
+	</select>
+
+	<!-- 서치 조건문 -->
+	<sql id="search">
+		 <if test="searchType != null" > 
+			   <if test="searchType == 'n'.toString()">				<!-- 이름 -->
+			     where a_name like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="searchType == 'i'.toString()">				<!-- 아이디 -->
+			     where a_id like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="searchType == 'l'.toString()">				<!-- 등급 -->
+			     where a_level like '%' || #{keyword} || '%'
+			   </if>      
+		 </if>  
+	</sql>
+	
+	<!-- 목록 검색 기능 -->
+	<select id="adminlistSearch" parameterType="SearchCriteria" resultType="AdminVO">
+		SELECT a_name, a_id, a_phonenum, a_email, a_level 
+	  	FROM (
+	         SELECT a_name, a_id, a_phonenum, a_email, a_level 
+	         , ROW_NUMBER() OVER(ORDER BY a_id DESC) as admin_seq
+	         FROM tbl_admin 
+       
+   			<include refid="search"></include>
+     		) DS
+    	WHERE admin_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
+	<!-- 목록 검색 카운트 기능 -->  
+	<select id="adminlistSearchCount" resultType="int">
+		<![CDATA[  
+		select count(a_id) 
+		from tbl_admin 
+		]]>
+		<include refid="search"></include>
+	</select>
+
+	<!-- 관리자 정보보기 -->
+	<select id="adminInfo" parameterType="String" resultType="org.velvet.domain.AdminVO">
+		select a_name, a_id, a_phonenum, a_email, a_level, a_regdate, a_recentlogout
+		from tbl_admin where a_id = #{a_id}
+	</select>
+	
+	<!-- 관리자 아이디 검색 -->
+	<select id="adminsearchID" resultType="AdminVO"> <!-- 멤버 검색 -->
+		select a_id from tbl_admin
+		where a_name=#{a_name} and a_phonenum=#{a_phonenum}
+	</select>
+	
+	<!-- 관리자 비밀번호 검색 -->
+	<update id="adminsearchPW" parameterType="org.velvet.domain.AdminVO">
+		update tbl_admin set a_password=#{a_password} 
+		where a_id=#{a_id} and a_name=#{a_name} and a_phonenum=#{a_phonenum}
+	</update>
+	<select id="searchPW" resultType="String">
+		select a_password from tbl_admin
+		where a_id=#{a_id}
+	</select>
+	
+	<!-- 관리자 마이페이지 정보수정 -->
+	<update id="adminModify" parameterType="org.velvet.domain.AdminVO">
+		update tbl_admin set a_name = #{a_name}, a_password = #{a_password}, a_phonenum = #{a_phonenum}
+		where a_id = #{a_id}
+	</update>
+	
+	<!-- 최고관리자가 관리자 등급수정 -->
+	<update id="alevelModify" parameterType="org.velvet.domain.AdminVO">
+		update tbl_admin set a_level = #{a_level}
+		where a_id = #{a_id}
+	</update>
+	
+	<!-- 여기까지 순수 관리자 기능 -->
+	
+	
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	
+	
+	<!-- 관리자의 유저관리 기능 -->
+	<!-- 관리자의 유저 목록 기능 -->
+	<select id="auserList" parameterType="String" resultType="org.velvet.domain.UserVO">
+		select u_name, u_id, u_gender, u_phonenum, u_regdate, g_code, u_verify 
+		from tbl_user 
+		order by u_regdate desc and u_id desc
+	</select>
+
+	<!-- 서치 조건문 -->
+	<sql id="ausersearch">
+		 <if test="searchType != null" > 
+			   <if test="searchType == 'n'.toString()">				<!-- 이름 -->
+			     where u_name like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="searchType == 'i'.toString()">				<!-- 아이디 -->
+			     where u_id like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="searchType == 'g'.toString()">				<!-- 등급 -->
+			     where g_code like '%' || #{keyword} || '%'
+			   </if>    
+			   <if test="searchType == 'v'.toString()">				<!-- 인증유무 -->
+			     where u_verify like '%' || #{keyword} || '%'
+			   </if>   
+		 </if>  
+	</sql>
+	
+	<!-- 목록 검색 기능 -->
+	<select id="auserlistSearch" parameterType="SearchCriteria" resultType="UserVO">
+		SELECT u_name, u_id, u_gender, u_phonenum, u_regdate, g_code, u_verify
+	  	FROM (
+	         SELECT u_name, u_id, u_gender, u_phonenum, u_regdate, g_code, u_verify
+	         , ROW_NUMBER() OVER(ORDER BY u_id DESC) as user_seq
+	         FROM tbl_user 
+       
+   			<include refid="ausersearch"></include>
+     		) DS
+    	WHERE user_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
+	<!-- 목록 검색 카운트 기능 -->  
+	<select id="auserlistSearchCount" resultType="int">
+		<![CDATA[  
+		select count(u_id) 
+		from tbl_user
+		]]>
+		<include refid="ausersearch"></include>
+	</select>
+	
+	<!-- 관리자 유저 삭제 기능 -->
+	<delete id="auserWithdraw" parameterType="String">
+		delete from tbl_user
+		where u_id = #{u_id}
+	</delete>
+
+	<!-- 관리자가 회원목록 보기 -->
+	<select id="auserInfo" parameterType="String" resultType="org.velvet.domain.UserVO">
+		select u_name, u_id, u_birthdate, u_gender, u_addnum, u_address, u_phonenum, u_regdate, g_code, u_point 
+		from tbl_user where u_id = #{u_id}
+	</select>
+	
+	<!-- 관리자가 유저 정보수정 -->
+	<update id="auserModify" parameterType="org.velvet.domain.UserVO">
+		update tbl_user set u_point = #{u_point}, g_code = #{g_code}
+		where u_id = #{u_id}
+	</update>
+
+	<!-- 관리자의 유저관리 기능 -->	
+</mapper>

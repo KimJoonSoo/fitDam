@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.UproductMapper">
+<!-- cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo, p_regdate, p_display -->
+	
+	<!-- 상품 목록 기능 1차 카테고리에 의한 목록 -->
+	<select id="uproductList" parameterType="String" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_photo, p_regdate, p_display
+		from tbl_product 
+		where cat_id							<!-- 가져오고자 하는 값이 cat_parentid이기 때문에 #{cat_parentid}로 쓴다 -->
+		in (select cat_id from tbl_category where cat_parentid = #{cat_parentid})
+		order by p_no desc
+	</select>
+
+	<!-- 상품 목록 기능 1차 카테고리에 의한 서치 조건문 -->
+	<sql id="searchProd">
+	<if test="searchType != null" > 
+		<if test="searchType == 'c'.toString()">			<!-- 카테고리 -->
+			and cat_id like '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'no'.toString()">			<!-- 상품번호 -->
+			and p_no like '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'n'.toString()">			<!-- 상품명 -->
+			and p_name like '%' || #{keyword} || '%'
+		</if>            
+	</if>  
+	</sql>
+	
+	<!-- 상품 목록 기능 1차 카테고리에 의한 상품 검색 기능 -->
+	<select id="uproductlistSearch" parameterType="USearchCriteria" resultType="ProductVO">
+		SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	  	FROM (
+	         SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	         , ROW_NUMBER() OVER(ORDER BY p_no DESC) as product_seq
+	         FROM tbl_product 
+			where cat_id					<!-- parameterType 값이 "USearchCriteria"클래스이므로 #{}로 불러오는 값은 USearchCriteria의 getter메서드 -->
+			in (select cat_id from tbl_category where cat_parentid = #{cat_id})
+   			<include refid="searchProd"></include>
+     		) DS
+    	WHERE product_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+	
+
+	<!-- 상품 목록 기능 1차 카테고리에 의한 상품 검색 카운트 기능 -->  
+	<select id="uproductlistSearchCount" parameterType="String" resultType="int">
+		<![CDATA[  
+		select count(p_no) 
+		from tbl_product
+		where cat_id
+        in (select cat_id from tbl_category where cat_parentid = #{cat_id})
+		]]>
+		<include refid="searchProd"></include>
+	</select>
+
+
+	<!-- 상품 카테고리 기능 -->
+	<select id="ucategoryList" resultType="CategoryVO">
+		select level, cat_name, cat_id, cat_parentid
+		from tbl_category
+		start with cat_parentid is null
+		connect by prior cat_id = cat_parentid
+	</select>
+
+
+	<!-- 상품 조회 기능 -->
+	<select id="uproductInfo" parameterType="String" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo, to_char(p_regdate, 'yyyy/mm/dd hh24:mi:ss') as p_regdate, p_display
+		from tbl_product where p_no = #{p_no}
+	</select>
+	
+
+	
+	
+	
+	
+	
+	
+	<!-- 메인페이지 상단 검색 후 전체 상품 목록 -->
+	<select id="uproductAList" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_photo, p_regdate, p_display
+		from tbl_product 
+		order by p_no desc
+	</select>
+
+	<!-- 메인페이지 상단 검색 후 전체 상품 서치 조건문 -->
+	<sql id="searchAProd">
+		<if test="searchType != null" > 
+			<if test="searchType == 'nno'.toString()">			<!-- 상품번호 -->
+				where ((p_no like '%' || #{keyword} || '%') or (p_name like '%' || #{keyword} || '%'))
+			</if>          
+		</if>  
+	</sql>
+	
+	<!-- 메인페이지 상단 검색 후 전체 상품 검색 기능 -->
+	<select id="uproductAlistSearch" parameterType="SearchCriteria" resultType="ProductVO">
+		SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	  	FROM (
+	         SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	         , ROW_NUMBER() OVER(ORDER BY p_no DESC) as product_seq
+	         FROM tbl_product 
+       
+   			<include refid="searchAProd"></include>
+     		) DS
+    	WHERE product_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+	
+
+	<!-- 메인페이지 상단 검색 후 전체 상품 검색 카운트 기능 -->  
+	<select id="uproductAlistSearchCount" resultType="int">
+		<![CDATA[  
+		select count(p_no) 
+		from tbl_product 
+		]]>
+		<include refid="searchAProd"></include>
+	</select>	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 상품 목록 기능 2차 카테고리에 의한 목록 -->
+	<select id="uproductcList" parameterType="String" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_photo, p_regdate, p_display
+		from tbl_product 
+		where cat_id							<!-- 가져오고자 하는 값이 cat_parentid이기 때문에 #{cat_parentid}로 쓴다 -->
+		in (select cat_id from tbl_category where cat_id = #{cat_id})
+		order by p_no desc
+	</select>
+
+	<!-- 상품 목록 기능 2차 카테고리에 의한 서치 조건문 -->
+	<sql id="searchProdd">
+	<if test="searchType != null" > 
+		<if test="searchType == 'no'.toString()">			<!-- 상품번호 -->
+			and p_no like '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'n'.toString()">			<!-- 상품명 -->
+			and p_name like '%' || #{keyword} || '%'
+		</if>            
+	</if>  
+	</sql>
+	
+	<!-- 상품 목록 기능 2차 카테고리에 의한 상품 검색 기능 -->
+	<select id="uproductclistSearch" parameterType="USearchCriteria" resultType="ProductVO">
+		SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	  	FROM (
+	         SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	         , ROW_NUMBER() OVER(ORDER BY p_no DESC) as product_seq
+	         FROM tbl_product 
+			where cat_id					<!-- parameterType 값이 "USearchCriteria"클래스이므로 #{}로 불러오는 값은 USearchCriteria의 getter메서드 -->
+			in (select cat_id from tbl_category where cat_id = #{cat_id})
+   			<include refid="searchProdd"></include>
+     		) DS
+    	WHERE product_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+	
+
+	<!-- 상품 목록 기능 2차 카테고리에 의한 상품 검색 카운트 기능 -->  
+	<select id="uproductclistSearchCount" parameterType="String" resultType="int">
+		<![CDATA[  
+		select count(p_no) 
+		from tbl_product
+		where cat_id
+        in (select cat_id from tbl_category where cat_id = #{cat_id})
+		]]>
+		<include refid="searchProdd"></include>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 상품 구매 기능 -->
+	
+	
+	
+	<!-- ............................................................................................. -->
+
+	
+</mapper>

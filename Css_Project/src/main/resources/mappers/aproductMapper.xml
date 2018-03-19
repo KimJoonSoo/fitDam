@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.AproductMapper">
+<!-- cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo, p_regdate, p_display -->
+	
+	<!-- 상품 목록 기능 -->
+	<select id="productList" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_photo, p_regdate, p_display
+		from tbl_product 
+		order by p_no desc
+	</select>
+
+	<!-- 서치 조건문 -->
+	<sql id="searchProd">
+	<if test="searchType != null" > 
+		<if test="searchType == 'c'.toString()">			<!-- 카테고리 -->
+			where cat_id like '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'no'.toString()">			<!-- 상품번호 -->
+			where p_no like '%' || #{keyword} || '%'
+		</if>
+		<if test="searchType == 'n'.toString()">			<!-- 상품명 -->
+			where p_name like '%' || #{keyword} || '%'
+		</if>            
+	</if>  
+	</sql>
+	
+	<!-- 상품 검색 기능 -->
+	<select id="productlistSearch" parameterType="SearchCriteria" resultType="ProductVO">
+		SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	  	FROM (
+	         SELECT cat_id, p_photo, p_no, p_name, p_price, p_regdate, p_display, p_count
+	         , ROW_NUMBER() OVER(ORDER BY p_no DESC) as product_seq
+	         FROM tbl_product 
+       
+   			<include refid="searchProd"></include>
+     		) DS
+    	WHERE product_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
+	<!-- 상품 검색 카운트 기능 -->  
+	<select id="productlistSearchCount" resultType="int">
+		<![CDATA[  
+		select count(p_no) 
+		from tbl_product 
+		]]>
+		<include refid="searchProd"></include>
+	</select>
+
+	<!-- 상품 등록 기능 -->
+	<insert id="productAdd" parameterType="org.velvet.domain.ProductVO">
+		insert into tbl_product (cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo) 
+		values(#{cat_id}, #{p_no}, #{p_name}, #{p_price}, #{p_count}, #{p_desc}, #{p_color}, #{p_size}, #{p_photo})
+	</insert>	<!-- #{} : 이 안에 들어가는 것들은 set 메서드이다 -->
+
+	<!-- 상품명 시퀀스 받아오기 -->
+	<select id="productseq" resultType="String">
+		select tbl_product_seq.nextval as p_seq from dual
+	</select>
+
+	<!-- 상품 카테고리 기능 -->
+	<select id="categoryList" resultType="CategoryVO">
+		select level, cat_name, cat_id, cat_parentid
+		from tbl_category
+		start with cat_parentid is null
+		connect by prior cat_id = cat_parentid
+	</select>
+
+	<!-- 상품 조회 기능 -->
+	<select id="productInfo" parameterType="String" resultType="org.velvet.domain.ProductVO">
+		select cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo, to_char(p_regdate, 'yyyy/mm/dd hh24:mi:ss') as p_regdate, p_display
+		from tbl_product where p_no = #{p_no}
+	</select>
+
+	<!-- 상품 삭제 기능 -->
+	<delete id="productDel" parameterType="String"> <!-- p_no 하나의 값을 필요로 하는데 p_no가 int이므로 파라미터타입이 int -->
+		delete from tbl_product 
+		where p_no = #{p_no}
+	</delete>
+
+	<!-- 상품 수정 기능 -->
+	<update id="productModify" parameterType="org.velvet.domain.ProductVO">
+		update tbl_product set p_name = #{p_name}, p_price = #{p_price}, p_count = #{p_count}, p_color = #{p_color}, p_size = #{p_size}, p_desc = #{p_desc}, p_photo = #{p_photo}, p_display = #{p_display}
+		where p_no = #{p_no}
+	</update>
+
+
+
+
+
+	
+		
+		
+
+	
+	
+	<!-- 상품 구매 기능 -->
+	
+	
+	
+	<!-- ............................................................................................. -->
+
+	
+</mapper>

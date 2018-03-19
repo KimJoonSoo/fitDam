@@ -1,0 +1,595 @@
+@charset "UTF-8";
+/* ------------------------------------------------------------------- */
+
+/* ---------------------    유저 / 관리자 로그인      ------------------------ */
+table
+{
+	margin: 0 auto;
+	text-align: center;
+	border-radius: 20px;
+}
+table.slogin
+{
+	text-align: center;
+	width: 700px;
+	margin: 0 auto;
+}
+th.stitle
+{
+	height: 80px;
+	border-bottom: 2px solid #000000;
+	font-size: 35px;
+	text-align: center;
+}
+tr.slogin
+{
+	height: 60px;
+}
+th.slogin
+{
+	text-align: left;
+	font-size: 20px;
+	width: 200px;
+}
+td.slogin
+{
+	text-align: left;
+	width: 100px;
+}
+input.slogin
+{
+	border: none;
+	width: 500px;
+	height: 35px;
+	font-size: 18px;
+	padding-left: 20px;
+	background-color: #F2F2F2;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* ---------------------     유저 / 관리자 아이디 비번 찾기     ------------------------ */
+table.ssearch
+{
+	text-align: center;
+	width: 600px;
+	margin: 0 auto;
+}
+th.ssearch
+{
+	text-align: left;
+	font-size: 17px;
+	width: 150px;
+}
+td.ssearch
+{
+	text-align: left;
+	width: 350px;
+}
+td.ssearch2
+{
+	text-align: right;
+	width: 200px;
+}
+input.ssearch
+{
+	border: none;
+	width: 380px;
+	height: 35px;
+	font-size: 16px;
+	padding-left: 20px;
+	background-color: #F2F2F2;
+}
+
+
+div.sbutton
+{
+	background-color: #002266;
+	color: #FFFFFF;
+	width: 700px;
+	height: 50px;
+	font-size: 25px;
+	text-align:center;
+	margin: 0 auto;
+	border-radius: 20px;
+	padding-top: 23px;
+}
+div.sbutton:hover
+{
+	background-color: #003cb3;
+	cursor: pointer;
+}
+
+table.sregister
+{
+	text-align: center;
+	width: 700px;
+	margin: 0 auto;
+}
+tr.sregister
+{
+	height: 20px;
+}
+td.sregister
+{
+	text-align: left;
+	font-size: 14px;
+	color: #3F3F3F;
+}
+td.sregister2
+{
+	color:white;
+	background-color: #002266;
+	border-radius: 10px;
+	width: 250px;
+}
+td.sregister2:hover
+{
+	background-color: #003cb3;
+	cursor: pointer;
+}
+
+div.sforgot
+{
+	width: 700px;
+	height: 50px;
+	text-align:center;
+	margin: 0 auto;
+	text-align: right;
+}
+a.schange:hover
+{
+	color: #003cb3;
+}
+input.ssubmitbtn 
+{
+	width: 90px;
+	height: 50px;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 20px;
+	font-size: 18px;
+	text-align: center;
+}
+input.ssubmitbtn:hover
+{
+	background-color: #003cb3;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* ---------------------     유저 / 관리자 가입     ------------------------ */
+table.sssregister
+{
+	width: 850px;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 2px solid black;
+}
+th.sssregister
+{
+	height: 50px;
+	font-size: 25px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+td.sssregister
+{
+	padding-left : 15PX;
+	height: 40px;
+	width : 160px;
+	font-size: 16px;
+	text-align: left;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+input.sssregister 
+{
+	padding-left : 15PX;
+	height: 25px;
+	font-size: 14px;
+	border-radius: 10px;
+}
+input.sssregbutton
+{
+	height: 25px;
+	width:120px;
+	background-color: #003cb3;
+	color: #FFFFFF;
+	font-size: 14px;
+	border-radius: 8px;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* -----------   유저 / 관리자 마이페이지, 정보수정, 등급수정    ------------------------ */
+table.mypage
+{
+	width: 900px;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 2px solid black;
+}
+th.mypage
+{
+	height: 50px;
+	font-size: 25px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+td.mypage
+{
+	padding-right : 15PX;
+	height: 35px;
+	width : 200px;
+	font-size: 16px;
+	text-align: right;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+input.mypage 
+{
+	padding-left : 15PX;
+	height: 30px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 550px;
+}
+input.mypage2 
+{
+	padding-left : 15PX;
+	height: 30px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 450px;
+}
+input.mypagep 
+{
+	padding-left : 15PX;
+	height: 30px;
+	font-size: 14px;
+	border-radius: 10px;
+}
+input.mypages
+{
+	height: 30px;
+	width:120px;
+	background-color: #002266;
+	color: #FFFFFF;
+	font-size: 14px;
+	border-radius: 8px;
+}
+input.mypages:hover
+{background-color: #002266;
+	color: #FFFFFF;
+	background-color: #003cb3;
+}
+button.mypage
+{
+	height: 30px;
+	width:120px;
+	background-color: #002266;
+	color: #FFFFFF;
+	font-size: 14px;
+	border-radius: 8px;
+}
+button.mypage:hover
+{
+	background-color: #003cb3;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* ---------------------     유저 / 관리자 각종 리스트     ------------------------ */
+table.lliisstt
+{
+	width: 1300px;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 2px solid black;
+}
+th.lliisstttitle
+{
+	height: 50px;
+	font-size: 25px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+th.lliisstt
+{
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+td.lliisstt
+{
+	padding-right : 15PX;
+	height: 35px;
+	width : 200px;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 10px;
+}
+input.lliisstt, button.lliisstt
+{
+	height: 30px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 80px;
+	background-color: #002266;
+	color: #FFFFFF;
+}
+input.lliisstt:hover, button.lliisstt:hover
+{
+	background-color: #003cb3;
+}
+input.deldel
+{
+	height: 30px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 80px;
+	background-color: #002266;
+	color: #FFFFFF;
+}
+input.deldel:hover
+{
+	background-color: #003cb3;
+}
+a.lliisstt
+{
+	text-decoration: none;
+	color: #002266;
+}
+a.lliisstt:hover
+{
+	color: #C0392B;
+	cursor: pointer;
+}
+	/* 리스트 페이징 부분 */
+    .pagination a 
+    {
+	    color: black;
+	    /* float: left; */
+	    padding: 8px 16px;
+	    text-decoration: none;
+	    transition: background-color .3s;
+	    border-radius : 10px;
+	}
+
+	.pagination a.active 
+	{
+	    background-color: #002266;
+	    border-radius : 10px;
+	    color: white;
+	}
+
+	.pagination a:hover:not(.active) 
+	{
+		background-color: #ddd;
+		border-radius : 10px;
+	}
+	ul.lliisstt
+	{
+		text-align: center;
+	}
+	/* 리스트 페이징 부분 */
+	
+input.lliissttsrc
+{
+	height: 30px;
+	width: 300px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 100px;
+	padding-left: 15px;
+	padding-right: 30px;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* ---------------------   상품등록     ------------------------ */
+table.splist
+{
+	width: 1000px;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 2px solid black;
+}
+th.splist
+{
+	height: 50px;
+	font-size: 25px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+td.splist
+{
+	background-color: #002266;
+	color: #FFFFFF;
+	padding-right : 15PX;
+	height: 40px;
+	width : 160px;
+	font-size: 16px;
+	text-align: right;
+	border-radius: 10px;
+}
+td.splist2
+{
+	padding-left : 10px;
+	height: 40px;
+	width : 200px;
+	font-size: 16px;
+	text-align: left;
+	border-radius: 10px;
+	border: 1px solid #f2f2f2;
+}
+select.splist
+{
+	height: 35px;
+	width: 270px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+input.splist
+{
+	height: 35px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 5px;
+	width: 250px;
+	font-size: 14px;
+}
+input.spbutton
+{
+	background-color: #002266;
+	color: #FFFFFF;
+	height: 30px;
+	width: 300px;
+	font-size: 14px;
+	border-radius: 10px;
+	width : 100px;
+	text-align: center;
+}
+input.spbutton:hover
+{
+	background-color: #003cb3;
+}
+
+/* ------------------------------------------------------------------- */
+
+/* ---------------------   footer 부분     ------------------------ */
+
+table.sfoot
+{
+	width: 1240px;
+	margin: 0 auto;
+	border-radius: 5px;
+	border: 2px solid black;
+}
+td.sfoot
+{
+	background-color: #002266;
+	color: #FFFFFF;
+	padding-right : 10px;
+	height: 30px;
+	width : 150px;
+	font-size: 18px;
+	text-align: center;
+	border-radius: 5px;
+}
+td.sfoot2
+{
+	height: 30px;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid #c0c0c0;
+}
+
+/**/
+/* 상품정보보기에서 p_desc 부분*/
+.proinfodiv
+{
+	overflow:scroll;	/* div 태그에 스크롤 넣기 */
+	padding: 10px;
+	width: 780px;
+	height: 500px;
+}
+
+
+
+/********************************************************************/
+/*메인페이지 시작시 창 띄우기*/
+div.fitbanner 
+{
+	background-color:#F2F2F2;
+    position: absolute;
+    top: 250px;
+    left: 20px;
+    width: 300px;
+    height: 400px;
+    border: 2px solid #002266;
+    z-index: 10;	/*이 값이 클수록 화면상 가장 앞으로 나오게 된다*/
+}
+td.bannertd
+{
+	height: 51px;
+	border: 2px solid black;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+td.bannertd:hover
+{
+	background-color: #000000;
+	color: #FFFFFF;
+}
+
+
+
+/******* 게시판 부분 *******/
+table.boardTable
+{
+	width: 1200px;
+	margin: 0 auto;
+	border-radius: 5px;
+	border: 2px solid black;
+}
+th.boardTable
+{
+	height: 40px;
+	font-size: 25px;
+	text-align: center;
+	background-color: #002266;
+	color: #FFFFFF;
+	border-radius: 10px;
+}
+button.boardTable
+{
+	width: 70px;
+	height: 30px;
+	color: #FFFFFF;
+	background-color: #002266;
+	border-radius: 8px;
+}
+button.boardTable:hover
+{
+	background-color: #003CB3;
+	cursor: pointer;
+}
+a.boardTable
+{
+	text-decoration: none;
+	color: #000000;
+}
+a.boardTable:hover
+{
+	cursor:pointer;
+	color: gray;
+}
+td.boardTable
+{
+	height: 45px;
+	font-size: 20px;
+}
+span.u_idinfo:hover
+{
+	color: gray;
+	font-style: italic;
+	cursor: pointer;
+}

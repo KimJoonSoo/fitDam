@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+ul, li.top, a.top
+{
+	list-style:none;
+	display:inline;  
+}
+
+li.title
+{
+	cursor: pointer;
+	font-size: 60px;
+}
+li.subtitle
+{
+	font-size: 22px;
+	cursor: pointer;
+}
+li.top
+{
+	font-size: 15px;
+	color: #b3b3b3;
+}
+li.top:hover
+{
+	font-size: 15px;
+	color: #000000;
+}
+
+ul.leftmenu
+{
+	float: left;
+	cursor: pointer;
+}
+ul.rightmenu
+{
+	float: right;
+	cursor: pointer;
+}
+input.searchitem
+{
+	border-radius: 30px;
+	height: 40px;
+	width: 250px;
+	border-color: #b3b3b3;
+	border-style: solid;
+	font-size: 16px;
+}
+
+.search-container button 
+{
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #b3b3b3;
+  font-size: 17px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.search-container button:hover 
+{
+  background: #000000;
+  color: #FFFFFF;
+}

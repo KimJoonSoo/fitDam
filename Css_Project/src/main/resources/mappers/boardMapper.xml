@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.BoardMapper">
+
+	<!-- 전체목록 기능 -->
+	<select id="listPage" parameterType="int" resultType="org.velvet.domain.BoardVO">
+	<![CDATA[
+		select b_no, b_title, u_id, b_regdate, b_viewcnt 
+		from tbl_board 
+		where b_no > 0 order by b_no desc, b_regdate desc
+	]]>  
+	</select>
+
+	<!-- 글쓰기 기능 -->
+	<insert id="writePage" parameterType="org.velvet.domain.BoardVO">
+		insert into tbl_board (b_no, b_title, b_content, u_id) 
+		values(tbl_board_seq.nextval, #{b_title}, #{b_content}, #{u_id})
+	</insert>	<!-- #{} : 이 안에 들어가는 것들은 set 메서드이다 -->
+
+	<!-- 글조회 기능 -->
+	<select id="readPage" parameterType="int" resultType="org.velvet.domain.BoardVO">
+		select b_no, b_title, b_content, u_id, b_regdate, b_viewcnt 
+		from tbl_board where b_no = #{b_no}
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="incviewcnt" parameterType="int">
+		<![CDATA[
+	 	update tbl_board set b_viewcnt = b_viewcnt+1 where b_no = #{b_no}
+		]]>
+	</update>
+		
+	<!-- 글삭제 기능 -->
+	<delete id="deletePage" parameterType="int"> <!-- b_no 하나의 값을 필요로 하는데 b_no가 int이므로 파라미터타입이 int -->
+		delete from tbl_board 
+		where b_no = #{b_no}
+	</delete>	
+	
+	<!-- 글수정 기능 -->
+	<update id="modifyPage" parameterType="org.velvet.domain.BoardVO">
+		update tbl_board set b_title = #{b_title}, b_content = #{b_content}
+		where b_no = #{b_no}
+	</update>
+	
+	
+	
+	
+	
+	<!-- ............................................................................................. -->
+	
+	
+	
+	<!-- 서치 조건문 -->
+	<sql id="search">
+		 <if test="searchType != null" > 
+			   <if test="searchType == 't'.toString()">				<!-- 제목 -->
+			     where b_title like '%' || #{keyword} || '%'
+			   </if>
+			   <if test="searchType == 'w'.toString()">				<!-- 작성자 -->
+			     where u_id like '%' || #{keyword} || '%'
+			   </if>     
+			   <if test="searchType == 'tw'.toString()">			<!-- 제목or작성자 -->
+			     where (b_title like '%' || #{keyword} || '%') OR (u_id like '%' || #{keyword} || '%')
+			   </if>        
+		 </if>  
+	</sql>
+	
+	<!-- 목록 검색 기능 -->
+	<select id="listSearch" parameterType="SearchCriteria" resultType="BoardVO">
+		SELECT b_no, b_title, u_id, b_content, b_regdate, b_viewcnt
+	  	FROM (
+	         SELECT b_no, b_title, u_id, b_content, b_regdate, b_viewcnt
+	         , ROW_NUMBER() OVER(ORDER BY b_no DESC) as board_seq
+	         FROM TBL_BOARD 
+       
+   			<include refid="search"></include>
+     		) DS
+    	WHERE board_seq BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
+	<!-- 목록 검색 카운트 기능 -->  
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[  
+		select count(b_no) 
+		from tbl_board 
+		]]>
+		<include refid="search"></include>
+	</select>
+
+
+
+
+
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- 댓글입력기능 -->
+	<insert id="replyInsert" parameterType="org.velvet.domain.ReplyVO">
+		INSERT INTO tbl_reply (re_no, b_no, re_title, re_content, u_id, re_regdate)
+		VALUES (tbl_reply_seq.NEXTVAL, #{b_no}, #{re_title}, #{re_content}, #{u_id}, sysdate)
+	</insert>
+	
+	
+	<!-- 댓글 목록 기능 -->
+	<select id="replyList" resultType="ReplyVO">
+		select re_no, b_no, re_title, re_content, u_id, re_regdate
+		from tbl_reply
+		where b_no = #{b_no}
+	</select>
+</mapper>

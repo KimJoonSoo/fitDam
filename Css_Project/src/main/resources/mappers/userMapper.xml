@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.UserMapper">
+	<!-- 유저 가입! -->
+	<insert id="userRegister" parameterType="org.velvet.domain.UserVO">
+		insert into tbl_user (u_name, u_id, u_password, u_birthdate, u_gender, u_address, u_addnum, u_phonenum)
+		values (#{u_name}, #{u_id}, #{u_password}, #{u_birthdate}, #{u_gender}, #{u_address}, #{u_addnum}, #{u_phonenum})
+	</insert>
+	
+	
+	<!-- 유저 로그인! -->
+	<select id="userLogin" parameterType="org.velvet.domain.UserVO" resultType="UserVO">
+		select u_name, u_id, u_birthdate, u_gender, u_address, u_addnum, u_phonenum, u_regdate, g_code, u_point, u_verify from tbl_user
+		where u_id=#{u_id} and u_password=#{u_password}
+	</select>
+	
+	
+	<!-- 유저 로그인 체크! -->
+	<select id="userloginCheck" resultType="UserVO">
+		SELECT u_name, u_id, u_password, u_birthdate, u_gender, u_address, u_addnum, u_phonenum, u_regdate, g_code, u_point FROM tbl_user
+		WHERE u_id = #{u_id} AND u_password = #{u_password}
+	</select>
+	
+	
+	<!-- 유저 메일 인증! -->
+	<update id="userVerify">
+		update tbl_user set u_verify='Y' where u_id=#{u_id}
+	</update>
+	
+	
+	<!-- 유저 아이디 중복 확인! -->
+	<select id="useridCheck" resultType="String">
+		SELECT u_id FROM tbl_user
+		WHERE u_id = #{u_id}
+	</select>
+	
+	
+	<!-- 마이페이지! -->
+	<select id="userMypage" parameterType="String" resultType="org.velvet.domain.UserVO">
+		select u_name, u_id, u_password, u_birthdate, u_gender, u_addnum, u_address, u_phonenum, u_regdate, g_code, u_point 
+		from tbl_user where u_id = #{u_id}
+	</select>
+	
+		
+	<!-- 유저 정보수정 -->
+	<update id="userModify" parameterType="org.velvet.domain.UserVO">
+		update tbl_user set u_name = #{u_name}, u_password = #{u_password}, u_gender = #{u_gender}, u_address = #{u_address}, u_addnum = #{u_addnum}, u_phonenum = #{u_phonenum}
+		where u_id = #{u_id}
+	</update>
+	
+	
+	<!-- 유저 탈퇴 -->
+	<delete id="userWithdraw" parameterType="String">
+		delete from tbl_user
+		where u_id = #{u_id}
+	</delete>
+	<select id="userwithdrawCheck" parameterType="HashMap" resultType="String">
+		select u_id from tbl_user
+		where u_id = #{u_id} and u_password=#{u_password}
+	</select>
+	
+	
+	<!-- 유저 아이디 검색! -->
+	<select id="usersearchID" resultType="UserVO"> <!-- 멤버 검색 -->
+		select u_id from tbl_user
+		where u_name=#{u_name} and u_phonenum=#{u_phonenum}
+	</select>
+	
+	
+	<!-- 유저 비밀번호 검색! -->
+	<update id="usersearchPW" parameterType="org.velvet.domain.UserVO">
+		update tbl_user set u_password=#{u_password} 
+		where u_id=#{u_id} and u_name=#{u_name} and u_phonenum=#{u_phonenum}
+	</update>
+	<select id="searchPW" resultType="String">
+		select u_password from tbl_user
+		where u_id=#{u_id}
+	</select>
+	
+</mapper>

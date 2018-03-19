@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.UcartMapper">
+	<!-- 장바구니 등록시 insert(장바구니에 없을경우), update(장바구니에 있을경우) 선택하기 -->
+	<select id="cartExsist" parameterType="HashMap" resultType="String">
+		select c_no from tbl_cart
+		where p_no = #{p_no} and u_id = #{u_id} and c_color = #{c_color} and c_size = #{c_size}
+	</select>	
+		
+	<!-- 장바구니 등록 기능 (insert) -->
+	<insert id="cartAdd" parameterType="org.velvet.domain.CartVO">
+		insert into tbl_cart (c_no, u_id, p_no, c_color, c_size, c_count) 
+		values(tbl_cart_seq.nextval, #{u_id}, #{p_no}, #{c_color}, #{c_size}, #{c_count})
+	</insert>
+	
+	<!-- 장바구니 존재여부 체크 -->
+	<select id="productCheck" parameterType="HashMap" resultType="String">
+		select c_no from tbl_cart
+		where p_no = #{p_no} and u_id = #{u_id} and c_color = #{c_color} and c_size = #{c_size}
+	</select>
+	
+	<!-- 장바구니 수량수정 -->
+	<update id="cartUp" parameterType="org.velvet.domain.CartVO">
+		<![CDATA[
+		update tbl_cart set c_count = #{c_count}
+		where c_no = #{c_no}
+		]]>
+	</update>
+	
+	<!-- 장바구니 삭제 기능 -->
+	<delete id="cartDel" parameterType="int">
+		delete from tbl_cart 
+		where c_no = #{c_no}
+	</delete>
+	
+	<!-- 장바구니 목록기능(유저별) -->
+	<select id="cartuList" resultType="CartVO">
+		select c_no, u.u_id, p.p_no, p.p_name, p.p_photo, p.p_price, c_color, c_size, c_count
+		from tbl_product p, tbl_cart c, tbl_user u
+		where c.p_no = p.p_no and u.u_id = c.u_id
+		and u.u_id = #{u_id}
+	</select>
+	
+
+</mapper>

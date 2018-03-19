@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.velvet.mapper.UbuyMapper">
+<!-- cat_id, p_no, p_name, p_price, p_count, p_desc, p_color, p_size, p_photo, p_regdate, p_display -->
+
+	
+	<!-- 장바구니에서 주문목록 -->
+	<select id="orderList" resultType="CartVO">
+		select p.p_no, p.p_name, p.p_photo, p.p_price, c_color, c_size, c_count
+		from tbl_product p, tbl_cart c, tbl_user u
+		where c.p_no = p.p_no and u.u_id = c.u_id
+		and u.u_id = #{u_id}
+		and c.c_no = #{c_no}
+	</select>
+	
+	<!-- 상품페이지에서 주문목록 -->
+	<select id="orderListP" resultType="ProductVO">
+		select p_no, p_name, p_photo, p_price, c_color, c_size, c_count
+		from tbl_product p, tbl_user u
+		where u.u_id = #{u_id}	
+		and p.p_no = #{p_no}
+	</select>
+	
+	<!-- 상품페이지에서 주문시 옵션값 등록 기능 (insert) 색, 사이즈, 수량만 -->
+	<insert id="orderAdd" parameterType="org.velvet.domain.OrderVO">
+		insert into tbl_order (u_id, p_no, c_color, c_size, c_count) 
+		values(#{u_id}, #{p_no}, #{c_color}, #{c_size}, #{c_count})
+	</insert>
+	
+	<!-- 주문하기 -->
+	<insert id="orderOrder" parameterType="org.velvet.domain.OrderVO">
+		insert into tbl_order (o_infoname, o_infophone, o_infoadd, o_addnum, o_infomessage) 
+		values(#{o_infoname}, #{o_infophone}, #{o_infoadd}, #{o_addnum}, #{o_infomessage})
+	</insert>
+	
+	<!-- 주문 취소 -->
+	
+	
+	
+	<!-- 주문 상세 -->
+	
+</mapper>
