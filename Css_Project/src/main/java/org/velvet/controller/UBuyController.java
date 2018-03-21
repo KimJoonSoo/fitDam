@@ -130,12 +130,5 @@ public class UBuyController
 		model.addAttribute("cartlist", cv);	
 	}
 
-	
-	
 
-	
-	// 주문 취소
-	
-	
-	// 주문 상세
 }

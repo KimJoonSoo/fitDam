@@ -101,12 +101,12 @@
         
         <tr align="left">
             <td class="mypage"><label for="g_code">GRADE</label></td>
-            <td style="padding-left: 15px;"><input id="g_code" name="g_code" type="text" value="${userVO.g_code}" readonly="readonly" class="mypage"/></td>
+            <td style="padding-left: 15px;"><input id="g_code" name="g_code" type="text" value="${userVO.g_code}" readonly="readonly" disabled="disabled" class="mypage"/></td>
         </tr>
         
         <tr align="left">
             <td class="mypage"><label for="u_point">POINT</label></td>
-            <td style="padding-left: 15px;"><input id="u_point" name="u_point" type="text" value="${userVO.u_point}" readonly="readonly" class="mypage"/></td>
+            <td style="padding-left: 15px;"><input id="u_point" name="u_point" type="text" value="${userVO.u_point}" readonly="readonly" disabled="disabled" class="mypage"/></td>
         </tr>
 
 		<tr align="left">

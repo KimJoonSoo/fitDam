@@ -178,5 +178,5 @@ public class BoardController
 	    return "redirect:/board/readPage";
 	}
 	
-
+	// 댓글 삭제기능 구현하기
 }

@@ -42,7 +42,21 @@ function closeWin()
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 <%@include file="/WEB-INF/views/include/nav.jsp"%>
 <section>
-
+<div>
+<table style="width: 1000px;">
+	<tr>
+		<td style="width: 300px;">1</td>
+		<td style="width: 300px;">2</td>
+		<td style="width: 300px;">3</td>
+	</tr>
+	
+	<tr>
+		<td style="width: 300px;">4</td>
+		<td style="width: 300px;">5</td>
+		<td style="width: 300px;">6</td>
+	</tr>
+</table>
+</div>
 
 
 <!-- 닫기 단추 클릭시 사라지는 기능 구현 -->

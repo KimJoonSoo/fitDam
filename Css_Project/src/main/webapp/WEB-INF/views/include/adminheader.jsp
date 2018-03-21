@@ -6,7 +6,6 @@
 <header>
 	<div>
 		<ul class="leftmenu">
-			<li class="top" id="goboard">| BOARD |</li>
 			<li class="top">| QnA |</li>
 			<li class="top">| REVIEW |</li>
 			<li class="top" id="goinstagram">| INSTAGRAM |</li>
@@ -74,6 +73,7 @@ $(document).ready(function()
 	{
 		 window.open('https://www.instagram.com/f.i.t.d.a.m/');
 	});
+	
 			
 });
 </script>	  

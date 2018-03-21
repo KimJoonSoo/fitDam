@@ -88,11 +88,23 @@ public class AdminController
 		AdminVO vo = service.adminLogin(admin);
 		String result = "";
 		
+		String uriquery = "";
+		
 		if (vo != null) // 로그인이 되어있을 경우
 		{
 			session.setAttribute("adminsession", vo);
-			result = "redirect:/admin/adminHome";
-			System.out.println(session.getAttribute("adminsession").toString());
+			
+			if(session.getAttribute("dest") != null)
+			{
+				uriquery = (String)session.getAttribute("dest");
+				result = "redirect:" + uriquery;
+			}
+			else
+			{
+				result = "redirect:/admin/adminHome";
+			}
+			
+			System.out.println(result);
 		} 
 		else	// 로그인이 되어있지 않는 경우
 		{

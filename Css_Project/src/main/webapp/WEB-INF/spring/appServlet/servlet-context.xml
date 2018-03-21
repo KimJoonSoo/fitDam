@@ -46,4 +46,76 @@
 	<!-- 스프링 빈을 태그로 등록하지 않고 자동으로 검색(auto scan) --> 
 	<context:component-scan base-package="org.velvet.controller" />
 	
+	
+	
+	<beans:bean id="userInterceptor" class="org.velvet.Interceptor.UserInterceptor"></beans:bean>
+	<beans:bean id="adminInterceptor" class="org.velvet.Interceptor.AdminInterceptor"></beans:bean>
+	
+	
+	<interceptors>
+	
+		<interceptor>
+			<mapping path="/board/listPage"/>
+			<mapping path="/board/modifyPage"/>
+			<mapping path="/board/readPage"/>
+			<mapping path="/board/writePage"/>
+			<mapping path="/board/removePage"/>
+			
+			<mapping path="/user/cartuList"/>
+			<mapping path="/user/orderDetail"/>
+			<mapping path="/user/orderList"/>
+			<mapping path="/user/orderListP"/>
+			<mapping path="/user/userModify"/>
+			<mapping path="/user/userMypage"/>
+			<mapping path="/user/userWithdraw"/>
+			
+			<mapping path="/board/listPage/"/>
+			<mapping path="/board/modifyPage/"/>
+			<mapping path="/board/readPage/"/>
+			<mapping path="/board/writePage/"/>
+			<mapping path="/board/removePage/"/>
+			
+			<mapping path="/user/cartuList/"/>
+			<mapping path="/user/orderDetail/"/>
+			<mapping path="/user/orderList/"/>
+			<mapping path="/user/orderListP/"/>
+			<mapping path="/user/userModify/"/>
+			<mapping path="/user/userMypage/"/>
+			<mapping path="/user/userWithdraw/"/>
+			
+			<beans:ref bean="userInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/adminInfo"/>
+			<mapping path="/admin/adminList"/>
+			<mapping path="/admin/adminModify"/>
+			<mapping path="/admin/adminMypage"/>
+			<mapping path="/admin/alevelModify"/>
+			<mapping path="/admin/auserInfo"/>
+			<mapping path="/admin/auserList"/>
+			<mapping path="/admin/auserModify"/>
+			<mapping path="/admin/productAdd"/>
+			<mapping path="/admin/productInfo"/>
+			<mapping path="/admin/productList"/>
+			<mapping path="/admin/productModify"/>
+			
+			<mapping path="/admin/adminInfo/"/>
+			<mapping path="/admin/adminList/"/>
+			<mapping path="/admin/adminModify/"/>
+			<mapping path="/admin/adminMypage/"/>
+			<mapping path="/admin/alevelModify/"/>
+			<mapping path="/admin/auserInfo/"/>
+			<mapping path="/admin/auserList/"/>
+			<mapping path="/admin/auserModify/"/>
+			<mapping path="/admin/productAdd/"/>
+			<mapping path="/admin/productInfo/"/>
+			<mapping path="/admin/productList/"/>
+			<mapping path="/admin/productModify/"/>
+			
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+	
+	</interceptors>
+	
 </beans:beans>

@@ -96,13 +96,25 @@ public class UserController
 		UserVO vo = service.userLogin(user);
 		String result = "";
 		
+		String uriquery = "";
+		
 		if (vo != null) 
 		{
 			if (vo.getU_verify().equals("Y")) // '' : char, "" : String
 			{
 				session.setAttribute("usersession", vo);
-				result = "redirect:/";
-				System.out.println(session.getAttribute("usersession").toString());
+				
+				if(session.getAttribute("dest") != null)
+				{
+					uriquery = (String)session.getAttribute("dest");
+					result = "redirect:" + uriquery;
+				}
+				else
+				{
+					result = "redirect:/";
+				}
+				
+				System.out.println(result);
 			} 
 			else
 			{
