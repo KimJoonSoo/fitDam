@@ -11,8 +11,8 @@ import javax.imageio.ImageIO;
 import org.imgscalr.Scalr;
 import org.springframework.util.FileCopyUtils;
 
-public class UploadFileUtils {
-
+public class UploadFileUtils 
+{
 	public static String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception {
 		// UUID 발급
 		UUID uuid = UUID.randomUUID();
@@ -29,11 +29,13 @@ public class UploadFileUtils {
 		String formatName = originalName.substring(originalName.lastIndexOf(".")+1);
 		String uploadedFileName = null;
 		// 이미지 파일이면 썸네일 생성
-		if (MediaUtils.getMediaType(formatName) != null) {
+		if (MediaUtils.getMediaType(formatName) != null) 
+		{
 			// 썸네일 생성
 			uploadedFileName = makeThumbnail(uploadPath, savedPath, savedName);
 		// 이미지 파일이 아니면 아이콘을 생성
-		} else {
+		} else 
+		{
 			// 아이콘 생성
 			uploadedFileName = makeIcon(uploadPath, savedPath, savedName);
 		}

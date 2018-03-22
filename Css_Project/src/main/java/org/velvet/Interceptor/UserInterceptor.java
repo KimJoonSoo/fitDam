@@ -28,16 +28,16 @@ public class UserInterceptor extends HandlerInterceptorAdapter
     try 
     {   // 고객 세션이 널이면 입력했던 경로를 saveDest에 저장을 하고 Redirect로 로그인창으로 보낸다.
     	if(request.getSession().getAttribute("usersession") == null )
-    	{ //로그인페이지로 
-    		saveDest(request);
-    		response.sendRedirect("/user/userLogin");
+    	{ 
+    		saveDest(request);	// 기존에 입력한 주소값을 저장하는 클래스
+    		response.sendRedirect("/user/userLogin"); // 인터셉터에 걸렸을 때 이동할 새 주소
     		return false; 
     	}
     } 
     catch (Exception e) 
     { 
     	e.printStackTrace(); 
-    } //널이 아니면 정상적으로 컨트롤러 호출 
+    } 	// 세션이 널이 아니면 정상적으로 컨트롤러 호출 
     
     return true;
   }  
